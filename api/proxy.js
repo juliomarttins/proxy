@@ -8,7 +8,13 @@ export default async function handler(request, response) {
   }
 
   try {
-    const fetchResponse = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+    // ----> A MUDANÇA ESTÁ AQUI <----
+    // Adicionamos um User-Agent para simular um navegador comum.
+    const fetchResponse = await fetch(url, { 
+      headers: { 
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36' 
+      } 
+    });
 
     if (!fetchResponse.ok) {
       return response.status(fetchResponse.status).send(`Erro ao buscar a URL: ${fetchResponse.statusText}`);
@@ -18,7 +24,7 @@ export default async function handler(request, response) {
 
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
-    
+
     return response.status(200).send(data);
 
   } catch (error) {
